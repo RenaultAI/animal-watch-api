@@ -1,0 +1,49 @@
+{
+	"ImportPath": "personal/animal-watch-api",
+	"GoVersion": "go1.8",
+	"GodepVersion": "v79",
+	"Packages": [
+		"./..."
+	],
+	"Deps": [
+		{
+			"ImportPath": "github.com/go-pg/pg",
+			"Comment": "v6.1.0",
+			"Rev": "fe3699c336cb7dbd24dca8ed9e0f1f3447f6b0f1"
+		},
+		{
+			"ImportPath": "github.com/go-pg/pg/internal",
+			"Comment": "v6.1.0",
+			"Rev": "fe3699c336cb7dbd24dca8ed9e0f1f3447f6b0f1"
+		},
+		{
+			"ImportPath": "github.com/go-pg/pg/internal/parser",
+			"Comment": "v6.1.0",
+			"Rev": "fe3699c336cb7dbd24dca8ed9e0f1f3447f6b0f1"
+		},
+		{
+			"ImportPath": "github.com/go-pg/pg/internal/pool",
+			"Comment": "v6.1.0",
+			"Rev": "fe3699c336cb7dbd24dca8ed9e0f1f3447f6b0f1"
+		},
+		{
+			"ImportPath": "github.com/go-pg/pg/orm",
+			"Comment": "v6.1.0",
+			"Rev": "fe3699c336cb7dbd24dca8ed9e0f1f3447f6b0f1"
+		},
+		{
+			"ImportPath": "github.com/go-pg/pg/types",
+			"Comment": "v6.1.0",
+			"Rev": "fe3699c336cb7dbd24dca8ed9e0f1f3447f6b0f1"
+		},
+		{
+			"ImportPath": "github.com/jinzhu/inflection",
+			"Rev": "1c35d901db3da928c72a72d8458480cc9ade058f"
+		},
+		{
+			"ImportPath": "github.com/julienschmidt/httprouter",
+			"Comment": "v1.1-44-g6f3f391",
+			"Rev": "6f3f3919c8781ce5c0509c83fffc887a7830c938"
+		}
+	]
+}
