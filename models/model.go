@@ -33,7 +33,7 @@ type Sighting struct {
 
 func (m *Model) GetSightings() ([]Sighting, error) {
 	var sightings []Sighting
-	if err := m.Model(&sightings).Select(); err != nil {
+	if err := m.Model(&sightings).OrderExpr("sightingtime asc").Select(); err != nil {
 		return nil, err
 	}
 

@@ -27,7 +27,26 @@ func getSightings(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 		return
 	}
 
-	j, err := json.Marshal(sightings)
+	// only get latest sightings for distinct sightings
+	mapping := make(map[int]int, len(sightings))
+	result := make([]models.Sighting, 0, len(sightings))
+	index := 0
+	for _, s := range sightings {
+		id := s.OriginalSightingID
+		if id == 0 {
+			id = s.ID
+		}
+		j, exists := mapping[id]
+		if exists {
+			result[j] = s
+		} else {
+			result = append(result, s)
+			mapping[id] = index
+			index++
+		}
+	}
+
+	j, err := json.Marshal(result)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
