@@ -49,6 +49,10 @@ func (m *Model) GetSighting(id int) (*Sighting, error) {
 	return &sighting, nil
 }
 
+func (m *Model) CreateSighting(s Sighting) error {
+	return m.Insert(&s)
+}
+
 func NewModel() *Model {
 	options, err := pg.ParseURL(os.Getenv("DATABASE_URL"))
 	if err != nil {
