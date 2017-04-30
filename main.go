@@ -52,6 +52,7 @@ func getSightings(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 		return
 	}
 
+	optionsHandler(w, r, nil)
 	w.Header().Set("Content-Type", "application/json")
 	fmt.Fprint(w, string(j))
 }
@@ -75,6 +76,7 @@ func getSighting(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		return
 	}
 
+	optionsHandler(w, r, nil)
 	w.Header().Set("Content-Type", "application/json")
 	fmt.Fprint(w, string(j))
 }
@@ -95,6 +97,7 @@ func createSighting(w http.ResponseWriter, r *http.Request, _ httprouter.Params)
 		return
 	}
 
+	optionsHandler(w, r, nil)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
 }
