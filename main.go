@@ -115,6 +115,7 @@ func main() {
 	router := httprouter.New()
 	router.OPTIONS("/sightings", optionsHandler)
 	router.GET("/sightings", getSightings)
+	router.OPTIONS("/sightings/:id", optionsHandler)
 	router.GET("/sightings/:id", getSighting)
 	router.POST("/sightings", createSighting)
 
