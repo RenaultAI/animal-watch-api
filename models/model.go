@@ -54,7 +54,7 @@ func (m *Model) GetSightings() ([]Sighting, error) {
 
 func (m *Model) GetSighting(id int) (*Sighting, error) {
 	sighting := Sighting{ID: id}
-	if err := m.Model(&sighting).Column("animal_id", "Animal").Where("sightingid = ?", id).Select(); err != nil {
+	if err := m.Model(&sighting).Column("sighting.*", "Animal").Where("sightingid = ?", id).Select(); err != nil {
 		return nil, err
 	}
 
