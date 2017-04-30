@@ -85,13 +85,22 @@ func createSighting(w http.ResponseWriter, r *http.Request, _ httprouter.Params)
 	var sighting models.Sighting
 	json.NewDecoder(r.Body).Decode(&sighting)
 
-	if sighting.Latitude == 0 || sighting.Longitude == 0 || sighting.AnimalID == 0 {
+	if sighting.Latitude == 0 || sighting.Longitude == 0 || sighting.Animal.Name == "" {
 		http.Error(w, fmt.Sprintf("Bad parameter: latitude, longitude, animal ID are required."), http.StatusBadRequest)
 		return
 	}
 
+	animalID, err := m.GetAnimalIDFromName(sighting.Animal.Name)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	sighting.AnimalID = animalID
 	sighting.CreatedAt = time.Now()
+	// TODO(ry): hardcode some stuff for now
 	sighting.ParkID = 1
+	sighting.UserID = 1
 	if err := m.CreateSighting(sighting); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

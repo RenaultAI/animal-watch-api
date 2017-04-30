@@ -37,10 +37,8 @@ type Sighting struct {
 	Gone               bool      `json:"gone" sql:"isanimalgone"`
 	ParkID             int       `json:"-" sql:"parkid"`
 	UserID             int       `json:"-" sql:"userid"`
-	// AnimalID           int       `json:"animals"`
-	AnimalID int `json:"-" sql:"animal_id"`
-	Animal   Animal
-	// Animal             Animal    `json:"animal"`
+	AnimalID           int       `json:"-" sql:"animal_id"`
+	Animal             Animal    `json:"animal"`
 }
 
 func (m *Model) GetSightings() ([]Sighting, error) {
@@ -63,6 +61,15 @@ func (m *Model) GetSighting(id int) (*Sighting, error) {
 
 func (m *Model) CreateSighting(s Sighting) error {
 	return m.Insert(&s)
+}
+
+func (m *Model) GetAnimalIDFromName(name string) (int, error) {
+	animal := Animal{Name: name}
+	if err := m.Model(&animal).Where("animalname = ?", name).Select(); err != nil {
+		return 0, err
+	}
+
+	return animal.ID, nil
 }
 
 func NewModel() *Model {
