@@ -99,8 +99,13 @@ func createSighting(w http.ResponseWriter, r *http.Request, _ httprouter.Params)
 	w.WriteHeader(http.StatusCreated)
 }
 
+func optionsHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+}
+
 func main() {
 	router := httprouter.New()
+	router.OPTIONS("/sightings", optionsHandler)
 	router.GET("/sightings", getSightings)
 	router.GET("/sightings/:id", getSighting)
 	router.POST("/sightings", createSighting)
