@@ -18,6 +18,15 @@ type Model struct {
 // Emails []string
 // }
 
+type Animal struct {
+	ID          int    `json:"id" sql:"id,pk"`
+	Name        string `json:"name" sql:"animalname"`
+	Description string `json:"description" sql:"animaldescription"`
+	ImageURL    string `json:"image_url" sql:"animalimageurl"`
+	Warning     int    `json:"warning" sql:"animaldangerwarning"`
+	CategoryID  int    `json:"category_id" sql:"animalcategoryid"`
+}
+
 type Sighting struct {
 	ID                 int       `json:"id" sql:"sightingid,pk"`
 	CreatedAt          time.Time `json:"created_at" sql:"sightingtime"`
@@ -26,9 +35,12 @@ type Sighting struct {
 	ImageURL           string    `json:"image_url" sql:"sightingimageurl"`
 	OriginalSightingID int       `json:"original_sighting_id" sql:"originalsightingid"`
 	Gone               bool      `json:"gone" sql:"isanimalgone"`
-	ParkID             int       `json:"park_id" sql:"parkid"`
-	AnimalID           int       `json:"animal_id" sql:"animalid"`
-	UserID             int       `json:"user_id" sql:"userid"`
+	ParkID             int       `json:"-" sql:"parkid"`
+	UserID             int       `json:"-" sql:"userid"`
+	// AnimalID           int       `json:"animals"`
+	AnimalID int `json:"-" sql:"animal_id"`
+	Animal   Animal
+	// Animal             Animal    `json:"animal"`
 }
 
 func (m *Model) GetSightings() ([]Sighting, error) {
@@ -42,7 +54,7 @@ func (m *Model) GetSightings() ([]Sighting, error) {
 
 func (m *Model) GetSighting(id int) (*Sighting, error) {
 	sighting := Sighting{ID: id}
-	if err := m.Select(&sighting); err != nil {
+	if err := m.Model(&sighting).Column("animal_id", "Animal").Where("sightingid = ?", id).Select(); err != nil {
 		return nil, err
 	}
 
