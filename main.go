@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/julienschmidt/httprouter"
+	"github.com/sfreiberg/gotwilio"
 )
 
 const (
@@ -106,9 +107,25 @@ func createSighting(w http.ResponseWriter, r *http.Request, _ httprouter.Params)
 		return
 	}
 
+	sendMessage(fmt.Sprintf("Your fellow watchman spotted %s", sighting.Animal.Name))
+
 	optionsHandler(w, r, nil)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
+}
+
+func sendMessage(message string) {
+	accountSid := os.Getenv("TWILIO_ACCOUNT_SID")
+	authToken := os.Getenv("TWILIO_AUTH_TOKEN")
+	twilio := gotwilio.NewTwilioClient(accountSid, authToken)
+
+	from := os.Getenv("SENDER_NUMBER")
+	to := os.Getenv("RECIPIENT_NUMBER")
+	_, exception, err := twilio.SendSMS(from, to, message, "", "")
+	if err != nil || exception != nil {
+		log.Printf("SMS exception %v encountered: err %s\n", exception, err)
+	}
+	// log.Printf("SMS successfully sent %v\n", response)
 }
 
 func optionsHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {

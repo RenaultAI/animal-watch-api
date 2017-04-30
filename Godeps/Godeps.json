@@ -44,6 +44,10 @@
 			"ImportPath": "github.com/julienschmidt/httprouter",
 			"Comment": "v1.1-44-g6f3f391",
 			"Rev": "6f3f3919c8781ce5c0509c83fffc887a7830c938"
+		},
+		{
+			"ImportPath": "github.com/sfreiberg/gotwilio",
+			"Rev": "58125ef28e4b5d7ab5328593099ae8cac5fcf6a2"
 		}
 	]
 }
